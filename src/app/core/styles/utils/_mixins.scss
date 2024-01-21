@@ -1,0 +1,28 @@
+@use "variables";
+
+// Breakpoint
+@mixin breakpoint($size) {
+  @if $size == xsm {
+    @media (max-width: variables.$breakpoint-xsm) {
+      @content;
+    }
+  } @else if $size == sm {
+    @media (max-width: variables.$breakpoint-sm) {
+      @content;
+    }
+  } @else if $size == md {
+    @media (max-width: variables.$breakpoint-md) {
+      @content;
+    }
+  } @else if $size == lg {
+    @media (max-width: variables.$breakpoint-lg) {
+      @content;
+    }
+  } @else if $size == xl {
+    @media (max-width: variables.$breakpoint-xl) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint mixin supports: xsm, sm, md, lg, xl";
+  }
+}

@@ -1,0 +1,27 @@
+@use '../utils';
+
+$container-width-xl: 1150px;
+$container-width-lg: 970px;
+$container-width-md: 750px;
+$container-width-sm: 550px;
+$container-width-xsm: auto;
+
+.app-container {
+  height: 100%;
+  width: $container-width-xl;
+  margin: 0 auto;
+
+  @include utils.breakpoint(lg) {
+    width: $container-width-lg;
+  }
+  @include utils.breakpoint(md) {
+    width: $container-width-md;
+  }
+  @include utils.breakpoint(sm) {
+    padding: 0 20px;
+    width: $container-width-sm;
+  }
+  @include utils.breakpoint(xsm) {
+    width: $container-width-xsm;
+  }
+}

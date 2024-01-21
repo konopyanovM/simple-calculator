@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {SignEnum} from "../../core/types";
 
 @Component({
   selector: 'app-calculator',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class CalculatorComponent {
 
+  protected readonly SignEnum = SignEnum;
 }

@@ -1,24 +1,27 @@
-<input type="text">
+<ul class="operation-list" *ngFor="let equation of equations$ | async; let i = index">
+  <li class="operation-list__item">
+    <p>{{ i + 1 }}.</p>
+    <ul class="operation">
+      <li *ngFor="let operation of equation" class="operation__item">
+        <span>{{ operation.value }}</span>
+        <span>{{ operation.operator }}</span>
+        <span *ngIf="operation.operator === OperatorEnum.Equal">{{ operation.total }}</span>
+      </li>
+    </ul>
+  </li>
+</ul>
+<pre>
+  {{ equations$ | async |json }}
+</pre>
+<h3 class="total">= {{ total$ | async }}</h3>
+<div class="display-wrapper">
+  <p class="display">{{ currentValue$ | async }}</p>
+</div>
 <div class="keyboard">
   <div class="keyboard__numbers">
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-    <button>4</button>
-    <button>5</button>
-    <button>6</button>
-    <button>7</button>
-    <button>8</button>
-    <button>9</button>
-    <button>0</button>
-    <button>.</button>
+    <button *ngFor="let number of NUMPAD_SYMBOLS" (click)="action$.next(number)">{{ number }}</button>
   </div>
   <div class="keyboard__operations">
-    <button>{{ SignEnum.Addition }}</button>
-    <button>{{ SignEnum.Subtraction }}</button>
-    <button>{{ SignEnum.Multiplication }}</button>
-    <button>{{ SignEnum.Division }}</button>
-    <button>C</button>
-    <button>=</button>
+    <button *ngFor="let operator of OPERATORS" (click)="action$.next(operator)">{{ operator }}</button>
   </div>
 </div>

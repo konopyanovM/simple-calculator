@@ -123,7 +123,7 @@ export class CalculatorService {
     this._total$.next(0);
   }
 
-  private _createOperation(operator: OperatorEnum) {
+  private _createOperation(operator: OperatorEnum): Operation {
     return {
       value: this._currentValue$.value,
       operator: operator,
@@ -131,12 +131,12 @@ export class CalculatorService {
     }
   }
 
-  private _handleEqualOperation() {
+  private _handleEqualOperation(): void {
     this._initialValue$.next(this._total$.value);
     this._currentEquation$.next(this._currentEquation$.value + 1);
   }
 
-  private _operate(firstValue: number, secondValue: number, operator: OperatorEnum) {
+  private _operate(firstValue: number, secondValue: number, operator: OperatorEnum): number {
     switch (operator) {
       case OperatorEnum.Addition:
         return firstValue + secondValue

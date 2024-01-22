@@ -27,15 +27,15 @@ export class CalculatorComponent implements OnInit {
     NumpadEnum.Eight,
     NumpadEnum.Nine,
     NumpadEnum.Zero,
-  ]
-  public OPERATORS = [
+  ];
+  public OPERATORS: OperatorEnum[] = [
     OperatorEnum.Addition,
     OperatorEnum.Subtraction,
     OperatorEnum.Multiplication,
     OperatorEnum.Division,
     OperatorEnum.Clear,
     OperatorEnum.Equal,
-  ]
+  ];
 
   //
 

@@ -22,7 +22,8 @@
 </div>
 <div class="keyboard">
   <div class="keyboard__numbers">
-    <button *ngFor="let number of NUMPAD_SYMBOLS" (click)="action$.next(number)">{{ number }}</button>
+    <button *ngFor="let number of NUMPAD_SYMBOLS" (click)="action$.next(number)">{{ number }}
+    </button>
   </div>
   <div class="keyboard__operations">
     <button *ngFor="let operator of OPERATORS" (click)="action$.next(operator)" class="button--info">{{ operator }}

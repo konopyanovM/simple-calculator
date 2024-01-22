@@ -15,10 +15,7 @@ export class AppComponent implements OnInit {
 
   // Private
   private _initThemeService() {
-    // Setting this root component ref to changing theme
     this._themeService.rootRef = this._elementRef.nativeElement;
-
-    // Setting saved theme
     this._themeService.setTheme();
   }
 

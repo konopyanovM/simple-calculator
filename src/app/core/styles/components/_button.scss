@@ -14,11 +14,17 @@ button {
 
   cursor: pointer;
 
+  transition: transform ease 150ms, box-shadow ease 300ms;
+
   &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px var(--color-black);
     filter: brightness(0.9);
   }
 
   &:active {
+    transform: translateY(1px);
+    box-shadow: 0 -1px var(--color-black);
     filter: brightness(0.8);
   }
 

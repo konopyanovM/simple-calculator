@@ -11,6 +11,17 @@
 
   box-shadow: 0 0 12px var(--color-grey-85);
 
+  .history {
+    padding: 0.5rem;
+    max-height: 300px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    overflow: scroll;
+  }
+
   pre {
     position: absolute;
     top: 60px;
@@ -30,6 +41,7 @@
 
   .operation {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
 
     &__item {
@@ -82,5 +94,11 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 0.75rem;
     }
+  }
+}
+
+.app-dark {
+  :host {
+    box-shadow: none;
   }
 }

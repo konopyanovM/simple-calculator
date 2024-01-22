@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, forkJoin, Observable, scan, Subject, tap} from "rxjs";
 import {NumpadEnum, Operation, OperatorEnum} from "./types";
-import {getLastItem, isEnum} from "../../core/helpers";
+import {getLastItem, isEnum, wipeDigit} from "../../core/helpers";
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +39,7 @@ export class CalculatorService {
   public _initCalculator() {
     return forkJoin(
       [
+        // On every action
         this._action$.pipe(
           tap(input => {
               if (input === OperatorEnum.Wipe) return this._write$.next(-2);
@@ -52,13 +53,11 @@ export class CalculatorService {
           scan((acc, input) => {
             // Input -2 to wipe one digit
             if (input === -2) {
-              const stringValue = String(acc);
-              const newStringValue = stringValue.slice(0, -1);
-              return newStringValue ? Number(newStringValue) : this._initialValue$.value;
+              return wipeDigit(acc);
             }
             // Input -1 to reset _write$
-            if (input === -1) return this._initialValue$.value
-            return acc * 10 + input
+            if (input === -1) return this._initialValue$.value;
+            return acc * 10 + input;
           }),
           tap(res => {
             this._currentValue$.next(Number(res))
@@ -66,18 +65,16 @@ export class CalculatorService {
         ),
         this._operate$.pipe(
           tap(operator => {
+            // Reset all if C is pressed
             if (operator === OperatorEnum.Clear) {
-              this._resetAll()
+              this._resetAll();
               return
             }
+            //
 
-            const equations: Operation[][] = this._equations$.value
-            const currentOperations: Operation[] = getLastItem(equations) as Operation[]
-            let newOperation: Operation = {
-              value: this._currentValue$.value,
-              operator: operator,
-              total: 0
-            }
+            const equations: Operation[][] = this._equations$.value;
+            const currentOperations: Operation[] = getLastItem(equations) as Operation[];
+            let newOperation: Operation = this._createOperation(operator);
 
             // If operations is empty
             if (!currentOperations.length) {
@@ -92,12 +89,9 @@ export class CalculatorService {
             this._total$.next(newOperation.total);
 
             //
-            if (operator === OperatorEnum.Equal) {
-              this._initialValue$.next(this._total$.value)
-              this._currentEquation$.next(this._currentEquation$.value + 1)
-            } else {
-              this._initialValue$.next(0)
-            }
+            if (operator === OperatorEnum.Equal)
+              this._handleEqualOperation();
+            else this._initialValue$.next(0);
           }),
           tap(() => {
             this._resetInput()
@@ -116,17 +110,30 @@ export class CalculatorService {
 
   // Private methods
   private _resetInput() {
-    this._currentValue$.next(this._initialValue$.value)
-    this._write$.next(-1)
+    this._currentValue$.next(this._initialValue$.value);
+    this._write$.next(-1);
   }
 
   private _resetAll() {
-    this._initialValue$.next(0)
-    this._currentValue$.next(this._initialValue$.value)
-    this._write$.next(-1)
-    this._equations$.next([[]])
-    this._currentEquation$.next(0)
-    this._total$.next(0)
+    this._initialValue$.next(0);
+    this._currentValue$.next(this._initialValue$.value);
+    this._write$.next(-1);
+    this._equations$.next([[]]);
+    this._currentEquation$.next(0);
+    this._total$.next(0);
+  }
+
+  private _createOperation(operator: OperatorEnum) {
+    return {
+      value: this._currentValue$.value,
+      operator: operator,
+      total: 0,
+    }
+  }
+
+  private _handleEqualOperation() {
+    this._initialValue$.next(this._total$.value);
+    this._currentEquation$.next(this._currentEquation$.value + 1);
   }
 
   private _operate(firstValue: number, secondValue: number, operator: OperatorEnum) {

@@ -1,32 +1,35 @@
-<ul class="operation-list" *ngFor="let equation of equations$ | async; let i = index">
-  <li class="operation-list__item">
-    <p *ngIf="equation.length">{{ i + 1 }}.</p>
-    <ul class="operation">
-      <li *ngFor="let operation of equation" class="operation__item">
-        <span>{{ operation.value }}</span>
-        <span>{{ operation.operator }}</span>
-        <span *ngIf="operation.operator === OperatorEnum.Equal">{{ operation.total }}</span>
-      </li>
-    </ul>
-  </li>
-</ul>
-<pre>
-  {{ equations$ | async |json }}
-</pre>
+<div class="history">
+  <ul class="operation-list" *ngFor="let equation of equations$ | async; let i = index">
+    <li class="operation-list__item">
+      <p *ngIf="equation.length">{{ i + 1 }}.</p>
+      <ul class="operation">
+        <li *ngFor="let operation of equation" class="operation__item">
+          <span>{{ operation.value }}</span>
+          <span>{{ operation.operator }}</span>
+          <span *ngIf="operation.operator === OperatorEnum.Equal">{{ operation.total }}</span>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<!--<pre>-->
+<!--  {{ equations$ | async |json }}-->
+<!--</pre>-->
 <h3 class="total">= {{ total$ | async }}</h3>
 <div class="display-wrapper">
   <p class="display">{{ currentValue$ | async }}</p>
-  <button class="button--danger" (click)="action$.next(OperatorEnum.Wipe)">
+  <button class="app-button app-button--danger" (click)="action$.next(OperatorEnum.Wipe)">
     <fa-icon [icon]="faChevronLeft"/>
   </button>
 </div>
 <div class="keyboard">
   <div class="keyboard__numbers">
-    <button *ngFor="let number of NUMPAD_SYMBOLS" (click)="action$.next(number)">{{ number }}
+    <button *ngFor="let number of NUMPAD_SYMBOLS" (click)="action$.next(number)" class="app-button">{{ number }}
     </button>
   </div>
   <div class="keyboard__operations">
-    <button *ngFor="let operator of OPERATORS" (click)="action$.next(operator)" class="button--info">{{ operator }}
+    <button *ngFor="let operator of OPERATORS" (click)="action$.next(operator)"
+            class="app-button app-button--info">{{ operator }}
     </button>
   </div>
 </div>

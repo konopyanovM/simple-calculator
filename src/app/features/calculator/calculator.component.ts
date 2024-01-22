@@ -2,6 +2,7 @@ import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {NumpadEnum, OperatorEnum} from "./types";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {CalculatorService} from "./calculator.service";
+import {faChevronLeft} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-calculator',
@@ -25,7 +26,6 @@ export class CalculatorComponent implements OnInit {
     NumpadEnum.Eight,
     NumpadEnum.Nine,
     NumpadEnum.Zero,
-    NumpadEnum.Point
   ]
   public OPERATORS = [
     OperatorEnum.Addition,
@@ -35,6 +35,12 @@ export class CalculatorComponent implements OnInit {
     OperatorEnum.Clear,
     OperatorEnum.Equal,
   ]
+  //
+
+  protected readonly currentValue$ = this._calculatorService.currentValue$;
+  protected readonly equations$ = this._calculatorService.equations$;
+  protected readonly total$ = this._calculatorService.total$;
+  protected readonly action$ = this._calculatorService.action$;
 
   //
 
@@ -46,9 +52,6 @@ export class CalculatorComponent implements OnInit {
       .subscribe()
   }
 
-  protected readonly currentValue$ = this._calculatorService.currentValue$;
-  protected readonly equations$ = this._calculatorService.equations$;
-  protected readonly total$ = this._calculatorService.total$;
-  protected readonly action$ = this._calculatorService.action$;
   protected readonly OperatorEnum = OperatorEnum;
+  protected readonly faChevronLeft = faChevronLeft;
 }

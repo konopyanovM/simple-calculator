@@ -1,6 +1,6 @@
 <ul class="operation-list" *ngFor="let equation of equations$ | async; let i = index">
   <li class="operation-list__item">
-    <p>{{ i + 1 }}.</p>
+    <p *ngIf="equation.length">{{ i + 1 }}.</p>
     <ul class="operation">
       <li *ngFor="let operation of equation" class="operation__item">
         <span>{{ operation.value }}</span>
@@ -16,12 +16,16 @@
 <h3 class="total">= {{ total$ | async }}</h3>
 <div class="display-wrapper">
   <p class="display">{{ currentValue$ | async }}</p>
+  <button class="button--danger" (click)="action$.next(OperatorEnum.Wipe)">
+    <fa-icon [icon]="faChevronLeft"/>
+  </button>
 </div>
 <div class="keyboard">
   <div class="keyboard__numbers">
     <button *ngFor="let number of NUMPAD_SYMBOLS" (click)="action$.next(number)">{{ number }}</button>
   </div>
   <div class="keyboard__operations">
-    <button *ngFor="let operator of OPERATORS" (click)="action$.next(operator)">{{ operator }}</button>
+    <button *ngFor="let operator of OPERATORS" (click)="action$.next(operator)" class="button--info">{{ operator }}
+    </button>
   </div>
 </div>

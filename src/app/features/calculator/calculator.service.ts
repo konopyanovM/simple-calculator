@@ -41,14 +41,21 @@ export class CalculatorService {
       [
         this._action$.pipe(
           tap(input => {
+              if (input === OperatorEnum.Wipe) return this._write$.next(-2);
               if (isEnum(OperatorEnum, input))
-                return this._operate$.next(input)
-              return this._write$.next(input)
+                return this._operate$.next(input);
+              return this._write$.next(input);
             }
           )
         ),
         this._write$.pipe(
           scan((acc, input) => {
+            // Input -2 to wipe one digit
+            if (input === -2) {
+              const stringValue = String(acc);
+              const newStringValue = stringValue.slice(0, -1);
+              return newStringValue ? Number(newStringValue) : this._initialValue$.value;
+            }
             // Input -1 to reset _write$
             if (input === -1) return this._initialValue$.value
             return acc * 10 + input
@@ -77,7 +84,7 @@ export class CalculatorService {
               newOperation.total = this._currentValue$.value;
             } else {
               const {total, operator: prevOperator} = getLastItem(currentOperations)!;
-              newOperation.total = this._operate(total, this._currentValue$.value, prevOperator!);
+              newOperation.total = this._operate(total, this._currentValue$.value, prevOperator!)!;
             }
 
             equations[this._currentEquation$.value].push(newOperation);
@@ -136,6 +143,8 @@ export class CalculatorService {
         return 0;
       case OperatorEnum.Equal:
         return this._total$.value;
+      default:
+        return -1;
     }
   }
 }

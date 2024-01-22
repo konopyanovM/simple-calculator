@@ -3,6 +3,7 @@ export enum OperatorEnum {
   Subtraction = '−',
   Multiplication = '×',
   Division = '/',
+  Wipe = '<',
   Clear = 'C',
   Equal = '=',
 }
@@ -18,5 +19,4 @@ export enum NumpadEnum {
   Seven,
   Eight,
   Nine,
-  Point = '.',
 }

@@ -4,6 +4,7 @@ import {CalculatorComponent} from './calculator.component';
 import {RouterModule} from "@angular/router";
 import {calculatorRouting} from "./calculator.routing";
 import {FormsModule} from "@angular/forms";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {FormsModule} from "@angular/forms";
   imports: [
     CommonModule,
     RouterModule.forChild(calculatorRouting),
-    FormsModule
+    FormsModule,
+    FaIconComponent
   ]
 })
 export class CalculatorModule {

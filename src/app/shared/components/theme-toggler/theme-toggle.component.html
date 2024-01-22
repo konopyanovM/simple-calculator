@@ -1,0 +1,10 @@
+<button
+  class="theme-toggle-button"
+  [class.theme-toggle-button--light-theme]="currentTheme === 'light'"
+  (click)="toggle()"
+  aria-label="theme toggle button"
+>
+  <fa-icon class="theme-toggle-button__dark-icon" [icon]="sunIcon" aria-label="switch  to light theme"></fa-icon>
+
+  <fa-icon class="theme-toggle-button__light-icon" [icon]="moonIcon" aria-label="switch  to dark theme"></fa-icon>
+</button>

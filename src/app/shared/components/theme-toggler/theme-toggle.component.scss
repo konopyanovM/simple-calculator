@@ -1,0 +1,43 @@
+:host {
+  position: relative;
+
+  font-size: inherit;
+
+  display: block;
+
+  .theme-toggle-button {
+    border: none;
+
+    padding: 0;
+
+    color: inherit;
+    background-color: transparent;
+
+    cursor: pointer;
+
+    &__dark-icon, &__light-icon {
+      display: inline-block;
+      inset: 0;
+    }
+
+    &__light-icon {
+      position: absolute;
+      opacity: 0;
+      scale: 1;
+    }
+
+    // When light mode enabled
+    &.theme-toggle-button--light-theme {
+      .theme-toggle-button__dark-icon {
+        position: static;
+        opacity: 0;
+      }
+
+      .theme-toggle-button__light-icon {
+        position: absolute;
+        opacity: 1;
+      }
+    }
+  }
+}
+
